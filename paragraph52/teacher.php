@@ -29,14 +29,18 @@ foreach ( $courses as $c ) {
 
 echo $OUTPUT->header ();
 
+echo '<div class="container">';
+if(has_capability('local/littlehelpers:view', context_system::instance())) {
+	echo "<a href='". $CFG->wwwroot . "/local/littlehelpers/paragraph52/administration.php'><h5>Zur administrativen Übersicht</h5></a>";
+}
 echo "<h1>Ihre Kurse:</h1>";
 echo "<h4>in die Sie als Lehrende/r oder Assistent/in eingetragen sind</h4>";
 
-if ($cleanCourses == $totalCourses) {
+if ($cleanCourses == $totalCourses && $totalCourses > 0) {
 	echo '<div class="alert alert-success">
 			  Alle Kurse wurden bearbeitet. Nichts weiter zu tun.
 			</div>';
-} else {
+} else if($totalCourses > 0) {
 	echo '<div class="alert alert-error">
 			  <h4>Unbearbeitete Kurse</h4>
 				Es gibt noch Kurse, die von Ihnen nicht als "sauber" markiert wurden. Bitte entfernen Sie ggf. geschütztes Material und
@@ -50,7 +54,7 @@ if (empty ( $courses )) {
 			  <b>Keine Kurse gefunden!</b>
 			</div>';
 } else {
-	$table = '<div class="container"><table class="table table-condensed">
+	$table = '<table class="table table-condensed">
 				<tr>
 					<th>#</th>
 					<th>Semester</th>

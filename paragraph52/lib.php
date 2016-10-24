@@ -2,7 +2,8 @@
 class CourseList {
 	private $courses = null;
 	public $roles = [];
-	const FILE = "/courses_paragraph_52.json";
+	
+	
 	function __construct() {
 		global $DB;
 		$this->loadCourses ();
@@ -25,7 +26,6 @@ class CourseList {
 	public function markCourseAsClean($courseid) {
 		$context = context_course::instance($courseid);
 		
-		
 		// Is teacher in course?
 		if($this->isTeacherInCourseContext($context->id)) {
 			global $DB, $USER;
@@ -39,7 +39,39 @@ class CourseList {
 		else {
 			echo "Not a teacher!";
 		}
+	}
 		
+	public function allCoursesAsArray() {
+		global $DB;
+		$sql = "SELECT
+					p.id,
+					c.id as courseid,
+					c.fullname,
+					c.shortname,
+					ccat.name AS fb,
+					(SELECT cc.name FROM {course_categories} cc WHERE cc.id = ccat.parent) AS semester,
+					p.clean,
+					p.userid,
+					(SELECT u.firstname FROM {user} u WHERE u.id = p.userid) as modifier_firstname,
+					(SELECT u.lastname FROM {user} u WHERE u.id = p.userid) as modifier_lastname,
+					p.timemodified
+				FROM
+					{course} c,
+					{course_categories} ccat,
+					{paragraph52} p
+				WHERE
+					p.course = c.id AND
+					ccat.id = c.category
+								";
+		$courses =  $DB->get_records_sql($sql);
+		
+		
+		$result = [];
+		$result[] = array("#", "Semester", "FB", "Kurs", "Sauber", "Markiert von", "Datum");
+		foreach ($courses as $c) {
+			$result[] = array($c->id, $c->semester, $c->fb, $c->shortname, $c->clean, $c->modifier_firstname . ' ' . $c->modifier_lastname, userdate($c->timemodified));
+		}
+		return json_encode($result);
 	}
 	
 	public function getCoursesWithRoleTeacher() {
@@ -65,6 +97,10 @@ class CourseList {
 			if($isTeacher) {
 				$courseids[] = $id;
 			}
+		}
+		
+		if(empty($courseids)) {
+			return [];
 		}
 		
 		$sql = "SELECT
