@@ -11,10 +11,77 @@ $PAGE->set_url ( '/local/littlehelpers/paragraph52/administration.php' );
 $PAGE->set_pagelayout ( 'base' );
 $PAGE->set_title ( 'Überprüfung §52a UrhG - Administration' );
 
-echo $OUTPUT->header ();
+
+$replyTo = optional_param('replyto', '', PARAM_RAW);
+$subject = optional_param('subject', '', PARAM_RAW);
+$text = optional_param('text', '', PARAM_RAW);
+$submit = optional_param('send', '', PARAM_RAW);
 
 $cl = new CourseList ();
+echo $OUTPUT->header ();
 
+// Mails verschicken
+if($submit) {
+	$cl->sendMails($replyTo, $subject, $text);
+}
+
+
+
+// $cl->sendMail();
+
+echo '<h1>Benachrichtigungen verschicken</h1>
+		<form method="post">
+			Antwort an:<br>
+			<input type="text" name="replyto" value="moodle@tu-darmstadt.de"><br>
+			Betreff:<br>
+			<input type="text" name="subject" value="Betreff"><br>
+			Text mit möglichen Platzhaltern:
+			<ul>
+				<li>###FIRSTNAME###</li>
+				<li>###LASTNAME###</li>
+				<li>###COURSES###</li>
+			</ul>
+			<textarea name="text" rows="10" cols="100">
+Sehr geehrte/r ###FIRSTNAME### ###LASTNAME###,<br>
+<br>
+###COURSES###
+<br>
+Mit freundlichen Grüßen
+<br>		
+Ihr Moodle-Team
+			</textarea><br><br>
+			<input type="submit" name="send" value="Send">
+			<input type="reset" value="Reset">
+		</form>';
+
+echo '<h1>Benachrichtigungen gehen an...</h1>';
+$persons = $cl->getPersonsToNotify ();
+
+$notificationsTable = '<table class="table table-condensed">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>' . get_string ( 'firstname' ) . '</th>
+				<th>' . get_string ( 'lastname' ) . '</th>
+				<th>' . get_string ( 'email' ) . '</th>
+				<th>' . get_string ( 'courses' ) . '</th>
+			</tr>
+		</thead>
+		<tbody>';
+foreach ( $persons as $p ) {
+	$notificationsTable .= '<tr>
+			<td>' . $p->userid . '</td>
+			<td>' . $p->firstname . '</td>
+			<td>' . $p->lastname . '</td>
+			<td>' . $p->email . '</td>
+			<td>' . $cl->formatCourses($p->courses) . '</td>
+	</tr>';
+}
+$notificationsTable .= '</tbody></table>';
+
+echo $notificationsTable;
+
+echo '<h1>Kursübersicht</h1>';
 echo '
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -32,7 +99,7 @@ echo '
       function drawDashboard() {
 
         // Create our data table.
-        var data = google.visualization.arrayToDataTable('.$cl->allCoursesAsArray().');
+        var data = google.visualization.arrayToDataTable(' . $cl->allCoursesAsArray () . ');
 
         // Create a dashboard.
         var dashboard = new google.visualization.Dashboard(
@@ -104,7 +171,5 @@ echo '
           <div id="table_div"></div>
 	    </div>
 		';
-
-
 
 echo $OUTPUT->footer ();

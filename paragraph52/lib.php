@@ -11,6 +11,112 @@ class CourseList {
 		//CourseList::printer ( $this->courses );
 	}
 	
+	public function getPersonsToNotify() {
+		global $DB;
+		$sql = "SELECT 
+					ra.id,
+					u.id as userid,
+					u.email,
+					u.firstname,
+					u.lastname,
+					c.id as courseid,
+					c.shortname,
+					(SELECT name FROM {course_categories} WHERE id = cat.parent) as semester,
+					cat.name as fb
+				FROM 
+					{user} u,
+					{role_assignments} ra,
+					{context} con,
+					{course} c,
+					{course_categories} cat,
+					{role} r,
+					{paragraph52} p
+				WHERE
+					ra.userid = u.id
+					AND u.email != ''
+					AND ra.roleid IN (SELECT id FROM {role} WHERE archetype = 'editingteacher')
+					AND ra.contextid = con.id
+					AND con.contextlevel = 50
+					AND con.instanceid = c.id
+					AND r.id = ra.roleid
+					AND c.id = p.course
+					AND p.clean = 0
+					AND c.category = cat.id";
+		$entries = $DB->get_records_sql($sql);
+		
+		$persons = array();
+		foreach ($entries as $entry) {
+			$c = new stdClass();
+			$c->id = $entry->courseid;
+			$c->shortname = $entry->shortname;
+			$c->semester = $entry->semester;
+			$c->fb = $entry->fb;
+			
+			if(isset($persons[$entry->userid])) {
+				$persons[$entry->userid]->courses[$c->id] = $c;
+			} else {
+				$p = new stdClass();
+				$p->userid = $entry->userid;
+				$p->firstname = $entry->firstname;
+				$p->lastname = $entry->lastname;
+				$p->email = $entry->email;
+				
+				
+				$p->courses = array($c->id => $c);
+				$persons[$entry->userid] = $p;				
+			}
+		}
+		return $persons;
+	}
+	
+	public function formatCourses($courses) {
+		global $CFG;
+		$return = "";
+		
+		foreach ($courses as $c) {
+			$return .= "<a target='_blank' href='".$CFG->wwwroot."/course/view.php?id=".$c->id."'>".$c->semester." / ".$c->fb." / ".$c->shortname."</a><br>";
+		}
+		
+		return $return;
+	}
+	
+	public function sendMails($replyTo, $subject, $text) {
+		$persons = $this->getPersonsToNotify();
+		
+		
+		foreach ($persons as $p) {
+			$t = $text;
+			$t = str_replace("###FIRSTNAME###", $p->firstname, $t);
+			$t = str_replace("###LASTNAME###", $p->lastname, $t);
+			$t = str_replace("###COURSES###", $this->formatCourses($p->courses), $t);
+			
+			$this->sendMail($p->userid, $subject, $t, '', $replyTo);
+		}
+	}
+	
+	public function sendMail($toUserId, $subject, $content, $smallContent = "", $replyTo) {
+		global $USER;
+		
+		$message = new \core\message\message();
+		$message->component = 'local_littlehelpers';
+		$message->name = 'paragraph52notification';
+		$message->userfrom = $USER;
+		$message->userto = $toUserId;
+		$message->subject = $subject;
+		$message->fullmessage = $content;
+		$message->fullmessageformat = FORMAT_MARKDOWN;
+		$message->fullmessagehtml = $content;
+		$message->smallmessage = $smallContent;
+		$message->notification = '0';
+		//$message->contexturl = 'http://GalaxyFarFarAway.com';
+		//$message->contexturlname = 'Context name';
+		$message->replyto = $replyTo;
+		//$content = array('*' => array('header' => ' test ', 'footer' => ' test ')); // Extra content for specific processor
+		//$message->set_additional_content('email', $content);
+		
+		$messageid = message_send($message);
+	}
+	
 	private function isTeacherInCourseContext($contextid) {
 		global $USER;
 		$isTeacher = false;

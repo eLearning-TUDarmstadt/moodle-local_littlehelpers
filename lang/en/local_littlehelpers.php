@@ -7,3 +7,4 @@
  */
 
 $string['pluginname'] = 'Little helpers';
+$string['messageprovider:paragraph52notification'] = 'Notifications about §52';
