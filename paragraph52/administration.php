@@ -55,6 +55,7 @@ Ihr Moodle-Team
 		</form>';
 
 echo '<h1>Benachrichtigungen gehen an...</h1>';
+echo '<p>Gelistet werden Lehrende/Assistenten die mindestens einen nicht-sauberen Kurs haben. Unter "Courses" stehen die nicht sauberen Kurse.</p>';
 $persons = $cl->getPersonsToNotify ();
 
 $notificationsTable = '<table class="table table-condensed">
