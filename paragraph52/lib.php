@@ -73,6 +73,8 @@ class CourseList {
 		global $CFG;
 		$return = "";
 		
+		// Absteigende Reihenfolge nach Kursids
+		krsort($courses);
 		foreach ($courses as $c) {
 			$return .= "<a target='_blank' href='".$CFG->wwwroot."/course/view.php?id=".$c->id."'>".$c->semester." / ".$c->fb." / ".$c->shortname."</a><br>";
 		}
@@ -92,6 +94,8 @@ class CourseList {
 			
 			$this->sendMail($p->userid, $subject, $t, '', $replyTo);
 		}
+		
+		echo "Mails an " . count($persons) . " Personen verschickt!";
 	}
 	
 	public function sendMail($toUserId, $subject, $content, $smallContent = "", $replyTo) {
@@ -115,6 +119,7 @@ class CourseList {
 		//$message->set_additional_content('email', $content);
 		
 		$messageid = message_send($message);
+		echo "MessageId: " . $messageid . "<br>";
 	}
 	
 	private function isTeacherInCourseContext($contextid) {
