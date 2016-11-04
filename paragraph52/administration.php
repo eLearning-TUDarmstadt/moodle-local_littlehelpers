@@ -26,6 +26,7 @@ if($submit) {
 }
 
 
+echo '<a href="#course_overview"><input type="button" value="Zur Kursübersicht"></a>';
 
 // $cl->sendMail();
 
@@ -82,7 +83,7 @@ $notificationsTable .= '</tbody></table>';
 
 echo $notificationsTable;
 
-echo '<h1>Kursübersicht</h1>';
+echo '<a name="course_overview"><h1>Kursübersicht</h1></a>';
 echo '
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
