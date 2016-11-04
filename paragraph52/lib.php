@@ -172,7 +172,8 @@ class CourseList {
 					{paragraph52} p
 				WHERE
 					p.course = c.id AND
-					ccat.id = c.category
+					ccat.id = c.category AND
+					(SELECT cc.name FROM {course_categories} cc WHERE cc.id = ccat.parent) IN ('SoSe 2015', 'WiSe 2015/16', 'SoSe 2016', 'WiSe 2016/17', 'Semesterübergreifende Kurse')
 								";
 		$courses =  $DB->get_records_sql($sql);
 		
@@ -233,7 +234,8 @@ class CourseList {
 				WHERE 
 					p.course IN (" . implode(",", $courseids) . ") AND
 					p.course = c.id AND
-					ccat.id = c.category
+					ccat.id = c.category AND
+					(SELECT cc.name FROM {course_categories} cc WHERE cc.id = ccat.parent) IN ('SoSe 2015', 'WiSe 2015/16', 'SoSe 2016', 'WiSe 2016/17', 'Semesterübergreifende Kurse')
 								";
 		return $DB->get_records_sql($sql);
 	}
