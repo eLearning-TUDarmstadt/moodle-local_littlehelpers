@@ -41,7 +41,9 @@ class CourseList {
 					AND r.id = ra.roleid
 					AND c.id = p.course
 					AND p.clean = 0
-					AND c.category = cat.id";
+					AND c.category = cat.id
+					AND (SELECT cc.name FROM {course_categories} cc WHERE cc.id = ccat.parent) IN ('SoSe 2015', 'WiSe 2015/16', 'SoSe 2016', 'WiSe 2016/17', 'Semesterübergreifende Kurse')
+					";
 		$entries = $DB->get_records_sql($sql);
 		
 		$persons = array();
