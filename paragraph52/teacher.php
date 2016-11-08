@@ -34,7 +34,7 @@ if(has_capability('local/littlehelpers:view', context_system::instance())) {
 	echo "<a href='". $CFG->wwwroot . "/local/littlehelpers/paragraph52/administration.php'><h5>Zur administrativen Übersicht</h5></a>";
 }
 echo "<h1>Ihre Kurse:</h1>";
-echo "<h4>in die Sie als Lehrende/r oder Assistent/in eingetragen sind</h4>";
+echo "<h4>in denen Sie die Rolle Lehrende oder Assistenz oder Tutoren besitzen</h4>";
 
 if ($cleanCourses == $totalCourses && $totalCourses > 0) {
 	echo '<div class="alert alert-success">
@@ -42,8 +42,8 @@ if ($cleanCourses == $totalCourses && $totalCourses > 0) {
 			</div>';
 } else if($totalCourses > 0) {
 	echo '<div class="alert alert-error">
-			  <h4>Unbearbeitete Kurse</h4>
-				Es gibt noch Kurse, die von Ihnen nicht als "sauber" markiert wurden. Bitte entfernen Sie ggf. geschütztes Material und
+			  <h4>Ungesichtete Kurse</h4>
+				Es gibt noch Kurse, die von Ihnen nicht als "geprüft" markiert wurden. Bitte entfernen Sie ggf. geschütztes Material und
 				markieren Sie anschließend den jeweiligen Kurs.
 			</div>';
 }
