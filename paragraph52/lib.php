@@ -7,7 +7,8 @@ class CourseList {
 	function __construct() {
 		global $DB;
 		$this->loadCourses ();
-		$this->roles = $DB->get_records('role', array('archetype' => 'editingteacher'), '', 'id, name, shortname');
+		$this->roles = (array) $DB->get_records_list('role', 'archetype', array('editingteacher','teacher'), 'id, name, shortname');
+		//$this->roles = $DB->get_records('role', array('archetype' => 'editingteacher'), '', 'id, name, shortname');
 		//CourseList::printer ( $this->courses );
 	}
 	
