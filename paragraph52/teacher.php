@@ -42,8 +42,8 @@ if ($cleanCourses == $totalCourses && $totalCourses > 0) {
 			</div>';
 } else if($totalCourses > 0) {
 	echo '<div class="alert alert-error">
-			  <h4>Unbearbeitete Kurse</h4>
-				Es gibt noch Kurse, die von Ihnen nicht als "sauber" markiert wurden. Bitte entfernen Sie ggf. geschütztes Material und
+			  <h4>Ungesichtete Kurse</h4>
+				Es gibt noch Kurse, die von Ihnen nicht als "geprüft" markiert wurden. Bitte entfernen Sie ggf. geschütztes Material und
 				markieren Sie anschließend den jeweiligen Kurs.
 			</div>';
 }
