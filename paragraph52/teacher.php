@@ -38,7 +38,7 @@ echo "<h4>in denen Sie die Rolle Lehrende oder Assistenz oder Tutoren besitzen</
 
 if ($cleanCourses == $totalCourses && $totalCourses > 0) {
 	echo '<div class="alert alert-success">
-			  Alle Kurse wurden bearbeitet. Nichts weiter zu tun.
+			  Alle Kurse wurden gesichtet. 
 			</div>';
 } else if($totalCourses > 0) {
 	echo '<div class="alert alert-error">
