@@ -38,12 +38,12 @@ echo "<h4>in denen Sie die Rolle Lehrende oder Assistenz oder Tutoren besitzen</
 
 if ($cleanCourses == $totalCourses && $totalCourses > 0) {
 	echo '<div class="alert alert-success">
-			  Alle Kurse wurden gesichtet. 
+			  Alle Kurse wurden geprüft. 
 			</div>';
 } else if($totalCourses > 0) {
 	echo '<div class="alert alert-error">
 			  <h4>Ungesichtete Kurse</h4>
-				Es gibt noch Kurse, die von Ihnen nicht als "geprüft" markiert wurden. Bitte entfernen Sie ggf. geschütztes Material und
+				Es gibt noch Kurse, die von Ihnen nicht als "geprüft" markiert wurden. Bitte entfernen Sie ggf. geschütztes Material (§52a) und
 				markieren Sie anschließend den jeweiligen Kurs.
 			</div>';
 }
