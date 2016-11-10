@@ -78,7 +78,7 @@ if (empty ( $courses )) {
 					<td>' . $c->fb . '</td>
 					<td>' . $c->shortname . '</td>';
 		if ($c->clean == "1") {
-			$table .= '<td>' . $c->clean . '</td>
+			$table .= '<td>gepr&uuml;ft</td>
 					<td>' . $c->modifier_firstname . ' ' . $c->modifier_lastname . '</td>
 					<td>' . userdate ( $c->timemodified ) . '</td>';
 		} else {
