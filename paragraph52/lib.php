@@ -277,5 +277,3 @@ class CourseList {
 		echo "<pre>" . print_r ( $v, true ) . "</pre>";
 	}
 }
-
-$cl = new CourseList ();
