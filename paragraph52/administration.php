@@ -81,9 +81,24 @@ foreach ( $persons as $p ) {
 }
 $notificationsTable .= '</tbody></table>';
 
+function cleanCourses($row) {
+	return $row[4] == 1;
+}
+
+$allCoursesArrayAsJson = $cl->allCoursesAsArray();
+
+$allCoursesArray = json_decode($allCoursesArrayAsJson);
+$numOfCourses = count($allCoursesArray);
+$numOfCleanCourses = count(array_filter($allCoursesArray, "cleanCourses"));
+$percOfCleanCourses = number_format((float) ($numOfCleanCourses * 100) / $numOfCourses, 2, '.', ''); 
+
+
 echo $notificationsTable;
 
 echo '<a name="course_overview"><h1>Kursübersicht</h1></a>';
+echo 'Anzahl Kurse: ' . $numOfCourses . '<br>';
+echo 'davon sauber: ' . $numOfCleanCourses . '<br>';
+echo 'in Prozent: ' . $percOfCleanCourses . ' %<br>';
 echo '
     <!--Load the AJAX API-->
     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -101,7 +116,7 @@ echo '
       function drawDashboard() {
 
         // Create our data table.
-        var data = google.visualization.arrayToDataTable(' . $cl->allCoursesAsArray () . ');
+        var data = google.visualization.arrayToDataTable(' . $allCoursesArrayAsJson . ');
 
         // Create a dashboard.
         var dashboard = new google.visualization.Dashboard(
