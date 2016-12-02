@@ -182,7 +182,7 @@ class CourseList {
 		
 		
 		$result = [];
-		$result[] = array("#", "Semester", "FB", "Kurs", "Sauber", "Markiert von", "Datum");
+		$result[] = array("#", "Semester", "FB", "Kurs", "Geprüft", "Markiert von", "Datum");
 		foreach ($courses as $c) {
 			$result[] = array($c->id, $c->semester, $c->fb, $c->shortname, $c->clean, $c->modifier_firstname . ' ' . $c->modifier_lastname, userdate($c->timemodified));
 		}
