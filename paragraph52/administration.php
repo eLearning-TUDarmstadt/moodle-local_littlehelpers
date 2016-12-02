@@ -143,7 +143,7 @@ echo '
 		          "controlType": "CategoryFilter",
 		          "containerId": "cleanfilter_div",
 		          "options": {
-		            "filterColumnLabel": "Gepr&uuml;ft"
+		            "filterColumnLabel": "Geprüft"
 		          }
 		        });
 
