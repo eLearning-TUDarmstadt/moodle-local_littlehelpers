@@ -58,7 +58,7 @@ Ihr Moodle-Team
 $persons = $cl->getPersonsToNotify ();
 
 echo '<h1>Benachrichtigungen gehen an ' . count($persons) . ' Lehrende/Assistenten</h1>';
-echo '<p>Gelistet werden Lehrende/Assistenten die mindestens einen nicht-sauberen Kurs haben. Unter "Courses" stehen die nicht sauberen Kurse.</p>';
+echo '<p>Gelistet werden Lehrende/Assistenten die mindestens einen ungeprüften Kurs haben. Unter "Courses" stehen die ungeprüften Kurse.</p>';
 
 $notificationsTable = '<table class="table table-condensed">
 		<thead>
@@ -98,7 +98,7 @@ echo $notificationsTable;
 
 echo '<a name="course_overview"><h1>Kursübersicht</h1></a>';
 echo 'Anzahl Kurse: ' . $numOfCourses . '<br>';
-echo 'davon sauber: ' . $numOfCleanCourses . '<br>';
+echo 'davon geprüft: ' . $numOfCleanCourses . '<br>';
 echo 'in Prozent: ' . $percOfCleanCourses . ' %<br>';
 echo '
     <!--Load the AJAX API-->
@@ -143,7 +143,7 @@ echo '
 		          "controlType": "CategoryFilter",
 		          "containerId": "cleanfilter_div",
 		          "options": {
-		            "filterColumnLabel": "Sauber"
+		            "filterColumnLabel": "Geprüft"
 		          }
 		        });
 
