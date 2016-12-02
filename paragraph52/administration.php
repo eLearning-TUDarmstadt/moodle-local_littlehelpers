@@ -98,7 +98,7 @@ echo $notificationsTable;
 
 echo '<a name="course_overview"><h1>Kursübersicht</h1></a>';
 echo 'Anzahl Kurse: ' . $numOfCourses . '<br>';
-echo 'davon geprüft: ' . $numOfCleanCourses . '<br>';
+echo 'davon gepr&uuml;ft: ' . $numOfCleanCourses . '<br>';
 echo 'in Prozent: ' . $percOfCleanCourses . ' %<br>';
 echo '
     <!--Load the AJAX API-->
@@ -143,7 +143,7 @@ echo '
 		          "controlType": "CategoryFilter",
 		          "containerId": "cleanfilter_div",
 		          "options": {
-		            "filterColumnLabel": "Geprüft"
+		            "filterColumnLabel": "Gepr&uuml;ft"
 		          }
 		        });
 
