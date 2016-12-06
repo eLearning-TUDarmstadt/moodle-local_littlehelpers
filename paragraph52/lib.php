@@ -88,14 +88,18 @@ class CourseList {
 	public function sendMails($replyTo, $subject, $text) {
 		$persons = $this->getPersonsToNotify();
 		
+		$length = count($persons);
 		
+		$index = 0;
 		foreach ($persons as $p) {
 			$t = $text;
 			$t = str_replace("###FIRSTNAME###", $p->firstname, $t);
 			$t = str_replace("###LASTNAME###", $p->lastname, $t);
 			$t = str_replace("###COURSES###", $this->formatCourses($p->courses), $t);
 			
-			$this->sendMail($p->userid, $subject, $t, '', $replyTo);
+			$messageid = $this->sendMail($p->userid, $subject, $t, '', $replyTo);
+			echo "Mail ".$index." von ".$length." -> id: ".$messageid."<br>\n";
+			$index++;
 		}
 		
 		echo "Mails an " . count($persons) . " Personen verschickt!";
@@ -120,9 +124,9 @@ class CourseList {
 		$message->replyto = $replyTo;
 		//$content = array('*' => array('header' => ' test ', 'footer' => ' test ')); // Extra content for specific processor
 		//$message->set_additional_content('email', $content);
-		
 		$messageid = message_send($message);
-		echo "MessageId: " . $messageid . "<br>";
+		return $messageid;
+		//echo "MessageId: " . $messageid . "<br>\n";
 	}
 	
 	private function isTeacherInCourseContext($contextid) {
