@@ -96,10 +96,15 @@ class CourseList {
 			$t = str_replace("###FIRSTNAME###", $p->firstname, $t);
 			$t = str_replace("###LASTNAME###", $p->lastname, $t);
 			$t = str_replace("###COURSES###", $this->formatCourses($p->courses), $t);
+			try {
+				$messageid = $this->sendMail($p->userid, $subject, $t, '', $replyTo);
+				echo "Mail ".$index." von ".$length." -> id: ".$messageid."<br>\n";
+			} catch(Exception $e) {
+				echo "Mailing Error - userid <b>".$p->userid."</b> at job: ".$index."<br>\n";
+			}
 			
-			$messageid = $this->sendMail($p->userid, $subject, $t, '', $replyTo);
-			echo "Mail ".$index." von ".$length." -> id: ".$messageid."<br>\n";
 			$index++;
+				
 		}
 		
 		echo "Mails an " . count($persons) . " Personen verschickt!";
