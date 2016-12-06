@@ -33,7 +33,7 @@ echo '<div class="container">';
 if(has_capability('local/littlehelpers:view', context_system::instance())) {
 	echo "<a href='". $CFG->wwwroot . "/local/littlehelpers/paragraph52/administration.php'><h5>Zur administrativen Ãœbersicht</h5></a>";
 }
-echo "<h1>Ihre Kurse:</h1>";
+echo "<h1>Ihre Kurse (SoSe 2015 - WiSe 2016/17 + semesterübergreifend):</h1>";
 echo "<h4>in denen Sie die Rolle Lehrende oder Assistenz oder Tutoren besitzen</h4>";
 
 if ($cleanCourses == $totalCourses && $totalCourses > 0) {
