@@ -117,13 +117,22 @@ class CourseList {
 		$message->component = 'local_littlehelpers';
 		$message->name = 'paragraph52notification';
 		$message->userfrom = $USER;
-		$message->userto = $toUserId;
+		
+		// Get user
+		$message->userto = core_user::get_user($toUserId);
+		
+		// Overrule emailstop
+		$message->userto->emailstop = 0;
+		
 		$message->subject = $subject;
 		$message->fullmessage = $content;
 		$message->fullmessageformat = FORMAT_MARKDOWN;
 		$message->fullmessagehtml = $content;
 		$message->smallmessage = $smallContent;
 		$message->notification = '0';
+		$message->contexturl = 'https://moodle.tu-darmstadt.de/local/littlehelpers/paragraph52';
+		$message->contexturlname = 'Paragraph52';
+		
 		//$message->contexturl = 'http://GalaxyFarFarAway.com';
 		//$message->contexturlname = 'Context name';
 		$message->replyto = $replyTo;

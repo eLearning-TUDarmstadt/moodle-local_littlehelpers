@@ -5,7 +5,6 @@ require_once($CFG->libdir.'/clilib.php');
 global $CFG;
 require_once (__DIR__.'/lib.php');
 
-
 $replyTo = "moodle@tu-darmstadt.de";
 $subject = "Erinnerung: Neuregelung zu digitalen Texten in der Lehre";
 
