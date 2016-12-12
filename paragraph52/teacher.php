@@ -45,8 +45,8 @@ if ($cleanCourses == $totalCourses && $totalCourses > 0) {
 } else if($totalCourses > 0) {
 	echo '<div class="alert alert-error">
 			  <h4>Ungesichtete Kurse</h4>
-				Es gibt noch Kurse, die von Ihnen nicht als "geprÃ¼ft" markiert wurden. Bitte entfernen Sie ggf. geschÃ¼tztes Material (Â§52a) und
-				markieren Sie anschlieÃŸend den jeweiligen Kurs.
+				Es gibt noch Kurse, die von Ihnen nicht als "gepr&uuml;ft" markiert wurden. Bitte entfernen Sie ggf. gesch&auml;tztes Material (&sect;52a) und
+				markieren Sie anschlie&szlig;end den jeweiligen Kurs.
 			</div>';
 }
 
