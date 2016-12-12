@@ -4,10 +4,12 @@ require $CFG->dirroot . '/local/littlehelpers/paragraph52/lib.php';
 
 global $OUTPUT, $PAGE, $CFG;
 
+require_login();
+
 $PAGE->set_context ( context_system::instance () );
 $PAGE->set_url ( '/local/littlehelpers/paragraph52/teacher.php' );
 $PAGE->set_pagelayout ( 'base' );
-$PAGE->set_title ( 'Überprüfung §52a UrhG' );
+$PAGE->set_title ( '&Uuml;berpr&uuml;fung &sect;52a UrhG' );
 
 $cl = new CourseList ();
 $courses = $cl->getCoursesWithRoleTeacher ();
@@ -31,20 +33,20 @@ echo $OUTPUT->header ();
 
 echo '<div class="container">';
 if(has_capability('local/littlehelpers:view', context_system::instance())) {
-	echo "<a href='". $CFG->wwwroot . "/local/littlehelpers/paragraph52/administration.php'><h5>Zur administrativen Übersicht</h5></a>";
+	echo "<a href='". $CFG->wwwroot . "/local/littlehelpers/paragraph52/administration.php'><h5>Zur administrativen &Uuml;bersicht</h5></a>";
 }
 echo "<h1>Ihre Kurse (SoSe 2015 - WiSe 2016/17 + semester&uuml;bergreifend):</h1>";
 echo "<h4>in denen Sie die Rolle Lehrende oder Assistenz oder Tutoren besitzen</h4>";
 
 if ($cleanCourses == $totalCourses && $totalCourses > 0) {
 	echo '<div class="alert alert-success">
-			  Alle Kurse wurden geprüft. 
+			  Alle Kurse wurden geprÃ¼ft. 
 			</div>';
 } else if($totalCourses > 0) {
 	echo '<div class="alert alert-error">
 			  <h4>Ungesichtete Kurse</h4>
-				Es gibt noch Kurse, die von Ihnen nicht als "geprüft" markiert wurden. Bitte entfernen Sie ggf. geschütztes Material (§52a) und
-				markieren Sie anschließend den jeweiligen Kurs.
+				Es gibt noch Kurse, die von Ihnen nicht als "geprÃ¼ft" markiert wurden. Bitte entfernen Sie ggf. geschÃ¼tztes Material (Â§52a) und
+				markieren Sie anschlieÃŸend den jeweiligen Kurs.
 			</div>';
 }
 
