@@ -46,22 +46,24 @@ foreach ($results as $r) {
 
 // are there any?
 if(count($lame_tasks) == 0) {
-	echo "Everything is fine. Exit. :)";
+	echo "Everything is fine. Exit. :)\n";
 	exit();
 }
 
 // send mail
-$msg = "Got problems with the cron tasks on " . $CFG->wwwroot . ":";
+$msg = "Got problems with the cron tasks on " . $CFG->wwwroot . ":<br /><ul>";
 foreach ($lame_tasks as $r) {
-	$msg .= " * " . $r->classname 
+	$msg .= "<li>" . $r->classname 
 	. " with settings: minute=".$r->minute 
 	. " hour=" . $r->hour 
 	. " day=".$r->day 
 	. " month=".$r->month
-	. " dayofweek=" . $r->dayofweek;
+	. " dayofweek=" . $r->dayofweek
+	. "</li>";
 }
-$msg .= count($lame_tasks) . " tasks did not run";
-print_r(exec('echo ' . $msg . ' | mail -s ' . $SUBJECT . ' ' . $MAIL_TO)); 
+$msg .= "</ul>";
+$msg .= count($lame_tasks) . " tasks did not run<br />";
+print_r(exec('echo "' . $msg . '" | mail -s ' . $SUBJECT . ' ' . $MAIL_TO)); 
 // | mail -s "' .. '" ' . $MAIL_TO .'" <<EOF\n ' . $msg . "\n EOF"); 
 
 //print_r($results);
