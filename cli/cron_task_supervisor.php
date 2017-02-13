@@ -52,18 +52,21 @@ if(count($lame_tasks) == 0) {
 }
 
 // compose message
-$msg = "Got problems with the cron tasks on " . $CFG->wwwroot . ":";
+$msg = "Got problems with the cron tasks on " . $CFG->wwwroot . ": \n";
 foreach ($lame_tasks as $r) {
-	$msg .= $r->classname 
+	$msg .= " * " . $r->classname 
 	. " with settings: minute=".$r->minute 
 	. " hour=" . $r->hour 
 	. " day=".$r->day 
 	. " month=".$r->month
-	. " dayofweek=" . $r->dayofweek;
+	. " dayofweek=" . $r->dayofweek
+	. "\n";
 }
-$msg .= count($lame_tasks) . " tasks did not run";
+$msg .= "\n" . count($lame_tasks) . " tasks did not run\n"; 
+$msg .= "See " . $CFG->wwwroot . "/admin/tool/task/scheduledtasks.php \n"; 
 
 
+// Send Mails
 $cmd = "echo '" . $msg . "' | mail -s '" . $SUBJECT . "' ";
 foreach($MAIL_TO as $address) {
 	echo "Sending mail to " . $address . "...";
@@ -79,13 +82,3 @@ foreach($MAIL_TO as $address) {
 		"OK!\n";
 	}
 }
-
-//$cmd = escapeshellcmd($cmd);
-//print_r($cmd);
-//print_r(exec($cmd));
-
-
-//print_r(exec('echo "' . $msg . '" | mail -s ' . $SUBJECT . ' ' . $MAIL_TO)); 
-// | mail -s "' .. '" ' . $MAIL_TO .'" <<EOF\n ' . $msg . "\n EOF"); 
-
-//print_r($results);
