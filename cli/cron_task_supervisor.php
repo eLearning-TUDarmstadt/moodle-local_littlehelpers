@@ -65,9 +65,6 @@ foreach ($lame_tasks as $r) {
 	
 	$msg .= "\t Last run: " . date($DATETIME, $r->lastruntime)
 		. "\t Planned next run was: " . date($DATETIME, $r->nextruntime) . "\n";
-	
-	$diff = time() - $r->nextruntime;
-	$msg .= "\t\t Delta between now and planned: " . gmdate('H:i:s', $diff) . "\n";
 }
 $msg .= "\n" . count($lame_tasks) . " tasks did not run\n"; 
 $msg .= "See " . $CFG->wwwroot . "/admin/tool/task/scheduledtasks.php \n"; 
