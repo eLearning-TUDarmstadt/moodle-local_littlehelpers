@@ -7,7 +7,8 @@
 // enter time in seconds
 $GRACE_TIME = 0;
 $MAIL_TO = [
-				"steffen.pegenau@gmail.com",
+				"max@mustermann-und-soehne-co-kg-aA.de",
+				"ulla@blumenkohl-am-main-ist-fein.de"
 			];
 $SUBJECT = "Moodle cron task problem"; 
 $DATETIME = "d.m.Y H:i:s";
