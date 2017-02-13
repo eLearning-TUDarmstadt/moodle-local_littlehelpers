@@ -63,11 +63,11 @@ foreach ($lame_tasks as $r) {
 	. " dayofweek=" . $r->dayofweek
 	. "\n";
 	
-	$msg . "\t Last run: " . date($DATETIME, $r->lastruntime)
+	$msg .= "\t Last run: " . date($DATETIME, $r->lastruntime)
 		. "\t Planned next run was: " . date($DATETIME, $r->nextruntime) . "\n";
 	
 	$diff = time() - $r->nextruntime;
-	$msg . "\t\t Delta between now and planned: " . gmdate('H:i:s', $diff) . "\n";
+	$msg .= "\t\t Delta between now and planned: " . gmdate('H:i:s', $diff) . "\n";
 }
 $msg .= "\n" . count($lame_tasks) . " tasks did not run\n"; 
 $msg .= "See " . $CFG->wwwroot . "/admin/tool/task/scheduledtasks.php \n"; 
@@ -80,7 +80,7 @@ foreach($MAIL_TO as $address) {
 	$ret;
 	$out;
 	exec($cmd . "'" . $address . "'", $out, $ret);
-	if($ret != 0) {
+	if($ret !== 0) {
 		echo "Mail liefert Fehlercode: " . $ret;
 		foreach ($out as $line) {
 			echo $line . "\n";
@@ -88,4 +88,5 @@ foreach($MAIL_TO as $address) {
 	} else {
 		"OK!\n";
 	}
+	echo "\n";
 }
