@@ -6,7 +6,9 @@
 // Task is broken, if: mdl_task_scheduled.nextruntime < current time - GRACE_TIME
 // enter time in seconds
 $GRACE_TIME = 0;
-$MAIL_TO = "steffen.pegenau@gmail.com";
+$MAIL_TO = [
+				"steffen.pegenau@gmail.com",
+			];
 $SUBJECT = "Moodle cron task problem"; 
 // </config>
 
@@ -43,27 +45,47 @@ foreach ($results as $r) {
 	}
 }
 
-
-// are there any?
+// are there any broken tasks?
 if(count($lame_tasks) == 0) {
 	echo "Everything is fine. Exit. :)\n";
 	exit();
 }
 
-// send mail
-$msg = "Got problems with the cron tasks on " . $CFG->wwwroot . ":<br /><ul>";
+// compose message
+$msg = "Got problems with the cron tasks on " . $CFG->wwwroot . ":";
 foreach ($lame_tasks as $r) {
-	$msg .= "<li>" . $r->classname 
+	$msg .= $r->classname 
 	. " with settings: minute=".$r->minute 
 	. " hour=" . $r->hour 
 	. " day=".$r->day 
 	. " month=".$r->month
-	. " dayofweek=" . $r->dayofweek
-	. "</li>";
+	. " dayofweek=" . $r->dayofweek;
 }
-$msg .= "</ul>";
-$msg .= count($lame_tasks) . " tasks did not run<br />";
-print_r(exec('echo "' . $msg . '" | mail -s ' . $SUBJECT . ' ' . $MAIL_TO)); 
+$msg .= count($lame_tasks) . " tasks did not run";
+
+
+$cmd = "echo '" . $msg . "' | mail -s '" . $SUBJECT . "' ";
+foreach($MAIL_TO as $address) {
+	echo "Sending mail to " . $address . "...";
+	$ret;
+	$out;
+	exec($cmd . "'" . $address . "'", $out, $ret);
+	if($ret != 0) {
+		echo "Mail liefert Fehlercode: " . $ret;
+		foreach ($out as $line) {
+			echo $line . "\n";
+		}
+	} else {
+		"OK!\n";
+	}
+}
+
+//$cmd = escapeshellcmd($cmd);
+//print_r($cmd);
+//print_r(exec($cmd));
+
+
+//print_r(exec('echo "' . $msg . '" | mail -s ' . $SUBJECT . ' ' . $MAIL_TO)); 
 // | mail -s "' .. '" ' . $MAIL_TO .'" <<EOF\n ' . $msg . "\n EOF"); 
 
 //print_r($results);
