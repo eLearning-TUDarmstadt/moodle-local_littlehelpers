@@ -1,7 +1,7 @@
 <?php
 
 // Aufruf im Moodle Hauptverzeichnis:
-// sudo -u www_mdl php delete_empty_courses.php
+// sudo -u www_mdl php local/littlehelpers/cli/delete_empty_courses.php
 
 
 define ( 'CLI_SCRIPT', 1 );
