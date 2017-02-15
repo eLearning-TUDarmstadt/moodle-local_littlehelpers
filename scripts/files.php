@@ -1,4 +1,7 @@
 <?php
+// List of all files
+// (may be too huge)
+
 require_once '../../../config.php';
 global $DB;
 require_capability ( 'local/littlehelpers:view', context_system::instance () );
