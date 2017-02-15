@@ -1,5 +1,13 @@
 <?php
 
+// Displays a table of ALL courses and the following information
+// category as fb
+// category of the category as semester
+// shortname/fullname/visible
+// sum of enrolments
+// count of persons in every role
+// count of every activity
+
 require_once '../../../config.php';
 require_capability('local/littlehelpers:view', context_system::instance());
 global $CFG, $DB;
