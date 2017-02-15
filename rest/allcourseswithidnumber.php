@@ -1,6 +1,7 @@
 <?php
 
-
+// Needed for
+// https://github.com/eLearning-TUDarmstadt/tucanveranstaltungswatcher
 
 require_once '../../../config.php';
 require_capability('local/littlehelpers:view', context_system::instance());
