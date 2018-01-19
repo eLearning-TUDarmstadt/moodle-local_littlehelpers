@@ -1,6 +1,9 @@
 <?php
 namespace local_littlehelpers\task;
 
+global $CFG;
+require_once $CFG->dirroot . '/local/littlehelpers/batchmailing/lib.php';
+
 class send_batchmails extends \core\task\scheduled_task {
 
     public function get_name() {
@@ -9,9 +12,6 @@ class send_batchmails extends \core\task\scheduled_task {
     }
 
     public function execute() {
-        global $CFG;
-        require_once $CFG->dirroot . '/local/littlehelpers/batchmailing/lib.php';
-        
         \BatchMailer::sendNextBatch();
     }
 

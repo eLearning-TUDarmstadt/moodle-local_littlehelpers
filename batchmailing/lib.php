@@ -1,5 +1,8 @@
 <?php
 
+defined('MOODLE_INTERNAL') || die ();
+
+
 class BatchMailer {
     
     private $batchSize = 100;

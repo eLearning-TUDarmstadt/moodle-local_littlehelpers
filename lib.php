@@ -1,6 +1,7 @@
 <?php
 
 
+
 function get_table($array) {
 	$out = "<table class='table table-condensed  table-bordered'>";
 	
