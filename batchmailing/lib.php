@@ -5,19 +5,19 @@ defined('MOODLE_INTERNAL') || die ();
 
 class BatchMailer {
     
-    private $batchSize = 100;
-    private $eventType = 'batchmailingnotification';
-    private $component = 'local_littlehelpers';
+    private static $batchSize = 100;
+    private static $eventType = 'batchmailingnotification';
+    private static $component = 'local_littlehelpers';
     
     public static function sendNextBatch() {
         
         global $DB;
         
-        $conditions = array('eventtype' => $this->eventType, 'component' => $this->component);
-        $messages = $DB->get_records('message', $conditions, 'timecreated', '*', 0, $this->batchSize);
+        $conditions = array('eventtype' => self::$eventType, 'component' => self::$component);
+        $messages = $DB->get_records('message', $conditions, 'timecreated', '*', 0, self::$batchSize);
         
         foreach($messages as $key => $message) {
-            $this->sendMessageMock($message);
+            self::sendMessageMock($message);
         }
         
     }
@@ -27,7 +27,7 @@ class BatchMailer {
         global $DB;
         
         if(isset($message->id)) {
-            $conditions = array('id' => $message->id, 'eventtype' => $this->eventType, 'component' => $this->component);
+            $conditions = array('id' => $message->id, 'eventtype' => self::$eventType, 'component' => self::$component);
             $DB->delete_records('message', $conditions);
         }
     }
@@ -45,8 +45,8 @@ class BatchMailer {
     	$message->fullmessagehtml   = $content;
     	$message->smallmessage      = "";
     	$message->notification      = '0';
-    	$message->eventtype         = $this->eventType;
-    	$message->component         = $this->component;
+    	$message->eventtype         = self::$eventType;
+    	$message->component         = self::$component;
     	$message->timecreated		= time();
     	$message->contexturl 		= 'https://moodle.tu-darmstadt.de/local/littlehelpers/batchmailing';
     	$message->contexturlname 	= 'Batchmailing';
