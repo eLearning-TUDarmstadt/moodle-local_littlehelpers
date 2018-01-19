@@ -4,6 +4,8 @@ define ( 'CLI_SCRIPT', 1 );
 require(__DIR__.'/../../../config.php');
 require_once($CFG->libdir.'/clilib.php');
 
+require_once(__DIR__ . '/lib.php');
+
 global $CFG;
 global $DB;
 
@@ -26,7 +28,7 @@ $intersection = array_intersect($ldapUsers, $users);
 $userIds = array_map(function($tuid) use ($dbUsers) { return $dbUsers[$tuid]; }, $intersection);
 
 foreach(array_slice($userIds, 0, 2) as $key => $value) {
-	$message = createMessage($value, 'Testnachricht', 'Das ist ein Test');
+	$message = \BatchMailer::createMessage($value, 'Testnachricht', 'Das ist ein Test');
 	$DB->insert_record('message', $message);
 }
 
