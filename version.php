@@ -24,6 +24,6 @@
 
 defined('MOODLE_INTERNAL') || die;
 
-$plugin->version  = 2012020809;
+$plugin->version  = 2012020810;
 $plugin->requires = 2010112400;
 $plugin->component = 'local_littlehelpers';
