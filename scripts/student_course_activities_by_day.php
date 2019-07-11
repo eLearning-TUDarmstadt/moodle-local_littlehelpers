@@ -21,12 +21,10 @@ $student_role = 5;
 
 
 // use $days to limit the reports to the last x days
-$days = 178; 
+$days = 14;
 $date = date_create();
 date_sub($date, date_interval_create_from_date_string("$days days"));
 $timestamp = date_timestamp_get($date);
-
-$DB->set_debug(true);
 
 if (!file_exists($csvDir)) {
     mkdir($csvDir, 0775, true);
