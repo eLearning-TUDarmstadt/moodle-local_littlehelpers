@@ -7,9 +7,35 @@
 
 define ( 'CLI_SCRIPT', 1 );
 
-$courseids = array_slice( $argv, 1 );
+//$courseids = array_slice( $argv, 1 );
 
-//print_r($argv);
+$arguments = array_slice( $argv, 1 );
+
+$courseids = explode(',', explode('ids=',$arguments[0])[1]);
+$startdate = explode('startdate=',$arguments[1])[1];
+$enddate = explode('enddate=',$arguments[2])[1];
+
+if(empty($courseids)){
+    exit("Please provide a comma separated list of course ids.");
+}
+
+foreach($courseids as $courseid) {
+    if(!is_numeric($courseid)){
+        exit("only numbers are allowed as ids");
+    }
+}
+
+
+if(!$startdate = strtotime($startdate)){
+    exit("Wrong Date format");
+}
+
+$sql_with_startdate = "AND     timecreated > $startdate  ";
+
+if($startdate == "") {
+    print("The whole log is used"."\n");
+    $sql_with_startdate = "";
+}
 
 require_once '../../../config.php';
 require_once('../../../lib/csvlib.class.php');
@@ -28,8 +54,7 @@ if (!file_exists($csvDir)) {
 
 foreach($courseids as $courseid) {
 
-echo "current: $courseid";
-    if(is_numeric($courseid) && $context = context_course::instance($courseid)) {
+    if($context = context_course::instance($courseid)) {
 
         $students = get_role_users(5 , $context);
 
@@ -48,7 +73,8 @@ echo "current: $courseid";
 		AND 	l.crud = 'r'
                 AND 	l.contextlevel = $context_module             
                 AND 	l.userid=ra.userid
-	            GROUP BY l.contextinstanceid";
+                ". $sql_with_startdate .
+	            "GROUP BY l.contextinstanceid";
 
         $result = $DB->get_records_sql($sql);
         $modinfo = get_fast_modinfo($courseid);
@@ -68,4 +94,3 @@ echo "current: $courseid";
     }
 
 }
-
